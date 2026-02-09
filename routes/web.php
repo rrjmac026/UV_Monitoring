@@ -17,4 +17,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'dashboard'])
+        ->name('admin.dashboard');
+});
+
+Route::middleware(['auth', 'role:farmer'])->group(function () {
+    Route::get('/farmer/dashboard', [App\Http\Controllers\Farmer\FarmerController::class, 'dashboard'])
+        ->name('farmer.dashboard');
+});
+
 require __DIR__.'/auth.php';
